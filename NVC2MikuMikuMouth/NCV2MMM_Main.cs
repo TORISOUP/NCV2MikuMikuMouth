@@ -14,8 +14,12 @@ namespace NVC2MikuMikuMouth
         private TCPManager tcpManager;
         private string broadcasterId = "";
 
+        /// <summary>
+        /// 起動時に自動実行
+        /// </summary>
         public void AutoRun()
         {
+            //待ち受け開始
             tcpManager = new TCPManager();
             tcpManager.ServerStart();
 
@@ -36,7 +40,7 @@ namespace NVC2MikuMikuMouth
 
         void pluginHost_ReceivedComment(object sender, ReceivedCommentEventArgs e)
         {
-            
+            //コメント取得時に変換して送信
             var newLiveCommentData = e.CommentDataList.Last();
             var commentInfo = new CommentInfo(newLiveCommentData, this.broadcasterId);
             var jsonString = commentInfo.ToJson();
@@ -45,7 +49,7 @@ namespace NVC2MikuMikuMouth
 
         public string Description
         {
-            get { return "MikuMikuMouthへコメント情報を送信するプラグインです"; }
+            get { return "みくみくまうすへコメント情報を送信するプラグインです"; }
         }
 
         public IPluginHost Host
@@ -76,7 +80,7 @@ namespace NVC2MikuMikuMouth
 
         public string Version
         {
-            get { return "1.0"; }
+            get { return "1.0b"; }
         }
     }
 }
