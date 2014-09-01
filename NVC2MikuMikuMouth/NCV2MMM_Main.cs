@@ -35,6 +35,7 @@ namespace NVC2MikuMikuMouth
 
         void pluginHost_BroadcastConnected(object sender, EventArgs e)
         {
+            //GetPlayerStatusから配信者IDを取得する
             broadcasterId = pluginHost.GetPlayerStatus().Stream.OwnerId;
         }
 

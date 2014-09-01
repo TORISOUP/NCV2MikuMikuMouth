@@ -18,13 +18,13 @@ namespace NVC2MikuMikuMouth
         {
             jsonSerializer = new DataContractJsonSerializer(typeof(CommentInfo));
             this.Name = liveCommentData.Name;
-            this.NickName = "";
+            this.NickName = ""; //なし
             this.Anonymity = liveCommentData.IsAnonymity;
-            this.IsCaster = liveCommentData.UserId == broadcasterId;
+            this.IsCaster = liveCommentData.UserId == broadcasterId;//暫定
             this.Message = liveCommentData.Comment;
             this.No = Int32.Parse(liveCommentData.No);
             this.Premium = liveCommentData.Premium;
-            this.ProfName = "";
+            this.ProfName = ""; //なし
             this.UserId = liveCommentData.UserId;
             this.Hiragana = MojiConverter.ConvertToHiragana(liveCommentData.Comment);
         }
