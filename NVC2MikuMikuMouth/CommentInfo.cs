@@ -26,7 +26,6 @@ namespace NVC2MikuMikuMouth
             this.Premium = liveCommentData.Premium;
             this.ProfName = ""; //なし
             this.UserId = liveCommentData.UserId;
-            this.Hiragana = MojiConverter.ConvertToHiragana(liveCommentData.Comment);
         }
 
         public string ToJson()
@@ -61,7 +60,5 @@ namespace NVC2MikuMikuMouth
         public string ProfName;
         [DataMember]
         public string UserId;
-        [DataMember]
-        public string Hiragana;
     }
 }
