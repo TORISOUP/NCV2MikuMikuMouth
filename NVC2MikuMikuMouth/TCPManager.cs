@@ -24,19 +24,13 @@ namespace NVC2MikuMikuMouth
 
         public void ServerStart()
         {
-            try
-            {
-                this.listener = new TcpListener(System.Net.IPAddress.Parse("127.0.0.1"), port);
-                this.listener.Start();
-                Debug.Print("待受を開始しました");
-                Accept();
-            }
-            catch (Exception e)
-            {
-                Debug.Fail("Server Error", e.Message);
-            }
-        }
 
+            this.listener = new TcpListener(System.Net.IPAddress.Parse("127.0.0.1"), port);
+            this.listener.Start();
+            Debug.Print("待受を開始しました");
+            Accept();
+
+        }
 
         /// <summary>
         /// 外部からの接続を待機する

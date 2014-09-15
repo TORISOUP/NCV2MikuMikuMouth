@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace NVC2MikuMikuMouth
 {
@@ -20,8 +21,16 @@ namespace NVC2MikuMikuMouth
         public void AutoRun()
         {
             //待ち受け開始
-            tcpManager = new TCPManager();
-            tcpManager.ServerStart();
+            try
+            {
+                tcpManager = new TCPManager();
+                tcpManager.ServerStart();
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.OutputLog(Application.StartupPath + @"\NCV2MMM_error_log.txt", e.ToString());
+                System.Windows.Forms.MessageBox.Show(e.ToString(), e.Message);
+            }
 
             this.pluginHost.ReceivedComment += pluginHost_ReceivedComment;
             this.pluginHost.BroadcastConnected += pluginHost_BroadcastConnected;
@@ -41,11 +50,23 @@ namespace NVC2MikuMikuMouth
 
         void pluginHost_ReceivedComment(object sender, ReceivedCommentEventArgs e)
         {
-            //コメント取得時に変換して送信
-            var newLiveCommentData = e.CommentDataList.Last();
-            var commentInfo = new CommentInfo(newLiveCommentData, this.broadcasterId);
-            var jsonString = commentInfo.ToJson();
-            tcpManager.SendToAll(jsonString);
+            try
+            {
+                if (e.CommentDataList.Count > 0)
+                {
+                    //コメント取得時に変換して送信
+                    var newLiveCommentData = e.CommentDataList.LastOrDefault();
+                    if (newLiveCommentData == null) { return; }
+                    var commentInfo = new CommentInfo(newLiveCommentData, this.broadcasterId);
+                    var jsonString = commentInfo.ToJson();
+                    tcpManager.SendToAll(jsonString);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.OutputLog(Application.StartupPath + @"\NCV2MMM_error_log.txt", e.ToString());
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), ex.Message);
+            }
         }
 
         public string Description
