@@ -17,6 +17,7 @@ NCV2MikuMikuMouthはNiconamaCommentViewer用プラグインです。
 * Premium
 * No
 * Message
+* Mail
 
 profNameとNickNameは空文字列になっています
 
