@@ -1,6 +1,7 @@
 ﻿using NicoLibrary.NicoLiveData;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,11 +15,11 @@ namespace NVC2MikuMikuMouth
     class CommentInfo
     {
         DataContractJsonSerializer jsonSerializer;
-        public CommentInfo(LiveCommentData liveCommentData ,string broadcasterId )
+        public CommentInfo(LiveCommentData liveCommentData,Plugin.UserSettingInPlugin.UserData user,string broadcasterId )
         {
             jsonSerializer = new DataContractJsonSerializer(typeof(CommentInfo));
             this.Name = liveCommentData.Name;
-            this.NickName = ""; //なし
+            this.NickName = user != null ? user.NickName : ""; //ユーザ設定があるならそこの名前を設定
             this.Anonymity = liveCommentData.IsAnonymity;
             this.IsCaster = liveCommentData.UserId == broadcasterId;//暫定
             this.Message = liveCommentData.Comment;

@@ -35,6 +35,7 @@ namespace NVC2MikuMikuMouth
             this.pluginHost.ReceivedComment += pluginHost_ReceivedComment;
             this.pluginHost.BroadcastConnected += pluginHost_BroadcastConnected;
             this.pluginHost.BroadcastDisConnected += pluginHost_BroadcastDisConnected;
+            
         }
 
         void pluginHost_BroadcastDisConnected(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace NVC2MikuMikuMouth
 
         void pluginHost_ReceivedComment(object sender, ReceivedCommentEventArgs e)
         {
+
             try
             {
                 if (e.CommentDataList.Count > 0)
@@ -57,14 +59,21 @@ namespace NVC2MikuMikuMouth
                     //コメント取得時に変換して送信
                     var newLiveCommentData = e.CommentDataList.LastOrDefault();
                     if (newLiveCommentData == null) { return; }
-                    var commentInfo = new CommentInfo(newLiveCommentData, this.broadcasterId);
+
+                    //ユーザ設定リスト取得
+                    var userList = this.pluginHost.GetUserSettingInPlugin().UserDataList;
+                    //コメントのユーザがユーザ設定リストにあれば取得
+                    var user = userList.FirstOrDefault(x => x.UserId == newLiveCommentData.UserId);
+
+                    var commentInfo = new CommentInfo(newLiveCommentData,user, this.broadcasterId);
                     var jsonString = commentInfo.ToJson();
                     tcpManager.SendToAll(jsonString);
                 }
             }
             catch (Exception ex)
             {
-                ErrorLogger.OutputLog(Application.StartupPath + @"\NCV2MMM_error_log.txt", e.ToString());
+                Debug.Fail(ex.ToString());
+                ErrorLogger.OutputLog(Application.StartupPath + @"\NCV2MMM_error_log.txt", ex.ToString());
                 System.Windows.Forms.MessageBox.Show(ex.ToString(), ex.Message);
             }
         }
