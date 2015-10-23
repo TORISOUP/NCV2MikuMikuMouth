@@ -1,4 +1,4 @@
-NCV2MikuMikuMouth
+﻿NCV2MikuMikuMouth
 ===============
 NCV2MikuMikuMouthはNiconamaCommentViewer用プラグインです。  
 ニコ生のコメントをSocket接続された対象にコメント情報を逐次PUSH通知します。
@@ -8,19 +8,22 @@ NCV2MikuMikuMouthはNiconamaCommentViewer用プラグインです。
 起動するとポート*50082*でTCP Socketの待受を開始します。
 ここにTCPで繋ぐことでニコ生のコメントを受け取ることができます。  コメント情報は新しいコメントが来る度に以下の要素が含まれたJSONがPUSHされます。
 
-* Anonymity
-* IsCaster
-* UserId
-* ProfName（空文字列）
-* Name
-* NickName（空文字列） 
-* Premium
-* No
-* Message
-* Mail
+* name
+* text
+* emotion
+* tag
+* isInterrupted
 
-profNameとNickNameは空文字列になっています
+例
 
+```
+{
+    "name": "ゆかり",
+    "text": "こんにちはみなさん",
+    "emotion": "greeting",
+    "tag": "white",
+    "isInterrupted": false,
+}
 
 使い方
 ------

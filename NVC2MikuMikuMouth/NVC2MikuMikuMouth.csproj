@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommentInfo.cs" />
+    <Compile Include="RequestDataPackage.cs" />
     <Compile Include="ErrorLogger.cs" />
     <Compile Include="NCV2MMM_Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -65,7 +65,7 @@ namespace NVC2MikuMikuMouth
                     //コメントのユーザがユーザ設定リストにあれば取得
                     var user = userList.FirstOrDefault(x => x.UserId == newLiveCommentData.UserId);
 
-                    var commentInfo = new CommentInfo(newLiveCommentData,user, this.broadcasterId);
+                    var commentInfo = new RequestDataPackage(newLiveCommentData,user, this.broadcasterId);
                     var jsonString = commentInfo.ToJson();
                     tcpManager.SendToAll(jsonString);
                 }
